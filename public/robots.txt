@@ -1,0 +1,23 @@
+# CVerse robots.txt
+
+User-agent: Googlebot
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /(auth)
+Crawl-delay: 1
+
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /(auth)
+Crawl-delay: 1
+
+Sitemap: https://cverse.dev/sitemap.xml
