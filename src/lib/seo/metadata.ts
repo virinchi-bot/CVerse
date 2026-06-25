@@ -18,7 +18,9 @@ export function generateMetadata(
     title: page.title,
     description: page.description,
     keywords: page.keywords?.join(', '),
-    robots: page.noindex ? 'noindex, nofollow' : 'index, follow',
+    robots: page.searchable === false
+  ? 'noindex, nofollow'
+  : 'index, follow',
     openGraph: {
       title: page.title,
       description: page.description,
