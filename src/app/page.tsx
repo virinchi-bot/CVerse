@@ -1,11 +1,15 @@
 'use client';
 
-<meta name="google-site-verification" content="4-QywuDRSafKgQEkW6YL_vqO6muEX022jao_PcJ7mt0" />
-
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+export const metadata = {
+  verification: {
+    google: "4-QywuDRSafKgQEkW6YL_vqO6muEX022jao_PcJ7mt0",
+  },
+}; 
 
 gsap.registerPlugin(ScrollTrigger);
 
