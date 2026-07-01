@@ -539,12 +539,8 @@ export default function Home() {
         <p style={{ fontSize: '11px', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>
           © 2025 CVerse. ALL RIGHTS RESERVED.
         </p>
-        <div style={{ display: 'flex', gap: '24px' }}>
-          {['Privacy', 'Terms', 'Contact'].map((l) => (
-            <a key={l} href="#" style={{ fontSize: '11px', color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{l}</a>
-          ))}
-        </div>
-        <div style={{ display: 'flex', gap: '24px' }}>
+        
+<div style={{ display: 'flex', gap: '24px' }}>
   <Link
     href="/privacy-policy"
     style={{
