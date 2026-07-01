@@ -10,26 +10,13 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (typeof window === 'undefined') return;
-
         const script = document.createElement('script');
         script.src = 'https://accounts.google.com/gsi/client';
         script.async = true;
-
         script.onload = () => {
-            const g = (window as any).google;
-            const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-            if (!g?.accounts?.id) {
-                console.warn('Google Identity Services not available');
-                return;
-            }
-            if (!clientId) {
-                console.warn('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not set');
-                return;
-            }
-
-            g.accounts.id.initialize({
-                client_id: clientId,
+            // @ts-ignore
+            window.google?.accounts.id.initialize({
+                client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
                 callback: async (response: any) => {
                     const { error } = await supabase.auth.signInWithIdToken({
                         provider: 'google',
@@ -39,19 +26,13 @@ export default function LoginPage() {
                     else window.location.href = '/dashboard';
                 },
             });
-
-            const btn = document.getElementById('googleBtn');
-            if (btn) {
-                g.accounts.id.renderButton(btn, { theme: 'outline', size: 'large', width: 380 });
-            }
+            // @ts-ignore
+            window.google?.accounts.id.renderButton(
+                document.getElementById('googleBtn'),
+                { theme: 'outline', size: 'large', width: 380 }
+            );
         };
-
         document.body.appendChild(script);
-
-        return () => {
-            // Cleanup: remove script and any global init if applicable
-            if (script.parentNode) script.parentNode.removeChild(script);
-        };
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -153,8 +134,8 @@ export default function LoginPage() {
                                 boxSizing: 'border-box',
                                 transition: 'border 0.2s ease',
                             }}
-                            onFocus={e => (e.currentTarget.style.borderColor = '#7C8CFF')}
-                            onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
+                            onFocus={e => (e.target.style.borderColor = '#7C8CFF')}
+                            onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
                         />
                     </div>
 
@@ -184,8 +165,8 @@ export default function LoginPage() {
                                 boxSizing: 'border-box',
                                 transition: 'border 0.2s ease',
                             }}
-                            onFocus={e => (e.currentTarget.style.borderColor = '#7C8CFF')}
-                            onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
+                            onFocus={e => (e.target.style.borderColor = '#7C8CFF')}
+                            onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
                         />
                     </div>
 
@@ -240,13 +221,11 @@ export default function LoginPage() {
                         opacity: 0.92,
                     }}
                 />
-                {/* Overlay gradient left edge blend */}
                 <div style={{
                     position: 'absolute', top: 0, left: 0,
                     width: '120px', height: '100%',
                     background: 'linear-gradient(90deg, #0F1115, transparent)',
                 }} />
-                {/* Bottom quote */}
                 <div style={{
                     position: 'absolute', bottom: '48px', left: '48px', right: '48px',
                 }}>
