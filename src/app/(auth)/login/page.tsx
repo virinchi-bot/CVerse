@@ -2,39 +2,57 @@
 
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { useState } from 'react';
-import { useEffect } from 'react';
-
-useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.onload = () => {
-        // @ts-ignore
-        window.google?.accounts.id.initialize({
-            client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-            callback: async (response: any) => {
-                const { error } = await supabase.auth.signInWithIdToken({
-                    provider: 'google',
-                    token: response.credential,
-                });
-                if (error) alert(error.message);
-                else window.location.href = '/dashboard';
-            },
-        });
-        // @ts-ignore
-        window.google?.accounts.id.renderButton(
-            document.getElementById('googleBtn'),
-            { theme: 'outline', size: 'large', width: 380 }
-        );
-    };
-    document.body.appendChild(script);
-}, []);
+import { useState, useEffect } from 'react';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+
+        script.onload = () => {
+            const g = (window as any).google;
+            const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+            if (!g?.accounts?.id) {
+                console.warn('Google Identity Services not available');
+                return;
+            }
+            if (!clientId) {
+                console.warn('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not set');
+                return;
+            }
+
+            g.accounts.id.initialize({
+                client_id: clientId,
+                callback: async (response: any) => {
+                    const { error } = await supabase.auth.signInWithIdToken({
+                        provider: 'google',
+                        token: response.credential,
+                    });
+                    if (error) alert(error.message);
+                    else window.location.href = '/dashboard';
+                },
+            });
+
+            const btn = document.getElementById('googleBtn');
+            if (btn) {
+                g.accounts.id.renderButton(btn, { theme: 'outline', size: 'large', width: 380 });
+            }
+        };
+
+        document.body.appendChild(script);
+
+        return () => {
+            // Cleanup: remove script and any global init if applicable
+            if (script.parentNode) script.parentNode.removeChild(script);
+        };
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -44,6 +62,7 @@ export default function LoginPage() {
         else window.location.href = '/dashboard';
         setLoading(false);
     };
+
     return (
         <div style={{
             display: 'flex',
@@ -134,8 +153,8 @@ export default function LoginPage() {
                                 boxSizing: 'border-box',
                                 transition: 'border 0.2s ease',
                             }}
-                            onFocus={e => (e.target.style.borderColor = '#7C8CFF')}
-                            onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
+                            onFocus={e => (e.currentTarget.style.borderColor = '#7C8CFF')}
+                            onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
                         />
                     </div>
 
@@ -165,8 +184,8 @@ export default function LoginPage() {
                                 boxSizing: 'border-box',
                                 transition: 'border 0.2s ease',
                             }}
-                            onFocus={e => (e.target.style.borderColor = '#7C8CFF')}
-                            onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
+                            onFocus={e => (e.currentTarget.style.borderColor = '#7C8CFF')}
+                            onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
                         />
                     </div>
 
