@@ -65,6 +65,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
       </body>
     </html>
   );
