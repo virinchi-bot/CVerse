@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -543,6 +544,20 @@ export default function Home() {
             <a key={l} href="#" style={{ fontSize: '11px', color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{l}</a>
           ))}
         </div>
+        <div style={{ display: 'flex', gap: '24px' }}>
+  <Link
+    href="/privacy-policy"
+    style={{
+      fontSize: '11px',
+      color: 'var(--text-muted)',
+      textDecoration: 'none',
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase'
+    }}
+  >
+    Privacy Policy
+  </Link>
+</div>
       </footer>
     </>
   );
