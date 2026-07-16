@@ -16,8 +16,8 @@ export const metadata: Metadata = genMeta(PAGES.home, {
   },
   themeColor: '#0F1115',
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: '/auth-img.png',
+    apple: '/auth-img.png',
   },
   formatDetection: {
     telephone: false,
@@ -45,8 +45,8 @@ export default function RootLayout({
         />
         
         {/* Favicon and Theme */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/auth-img.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/auth-img.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0F1115" />
         
