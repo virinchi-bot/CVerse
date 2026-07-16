@@ -1,7 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 const navItems = [
     { label: 'Overview', href: '/dashboard', icon: '⊞' },
@@ -16,6 +18,19 @@ const navItems = [
 
 export default function Sidebar() {
     const pathname = usePathname();
+    const [user, setUser] = useState<{ name: string; avatar: string } | null>(null);
+
+    useEffect(() => {
+        supabase.auth.getUser().then(({ data }) => {
+            if (data.user) {
+                const meta = data.user.user_metadata as Record<string, any>;
+                setUser({
+                    name: meta.full_name || meta.user_name || meta.name || 'User',
+                    avatar: meta.avatar_url || meta.picture || '',
+                });
+            }
+        });
+    }, []);
 
     return (
         <aside id="dashboard-sidebar" style={{
@@ -87,16 +102,25 @@ export default function Sidebar() {
                 padding: '16px 20px',
                 borderTop: '1px solid rgba(255,255,255,0.06)',
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{
-                        width: '28px', height: '28px', borderRadius: '50%',
-                        background: 'rgba(124,140,255,0.2)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: '12px', color: '#7C8CFF',
-                    }}>V</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px' }}>
+                    {user?.avatar ? (
+                        <img
+                            src={user.avatar}
+                            alt={user.name}
+                            style={{ width: '32px', height: '32px', borderRadius: '50%' }}
+                        />
+                    ) : (
+                        <div style={{
+                            width: '32px', height: '32px', borderRadius: '50%',
+                            background: '#7C8CFF', display: 'flex', alignItems: 'center',
+                            justifyContent: 'center', color: '#0F1115', fontWeight: 600,
+                        }}>
+                            {user?.name?.[0]?.toUpperCase() || 'U'}
+                        </div>
+                    )}
                     <div>
-                        <p style={{ fontSize: '12px', color: '#EAEAEA', margin: 0 }}>Buddy</p>
-                        <p style={{ fontSize: '10px', color: '#4B5563', margin: 0 }}>Free plan</p>
+                        <p style={{ fontSize: '13px', color: '#EAEAEA', margin: 0 }}>{user?.name || 'Loading...'}</p>
+                        <p style={{ fontSize: '11px', color: '#6B7280', margin: 0 }}>Free plan</p>
                     </div>
                 </div>
             </div>

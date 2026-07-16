@@ -1,7 +1,22 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 
-export default function DashboardOverview() {
+export default function DashboardPage() {
+    useEffect(() => {
+        // Supabase reads the token from the URL hash automatically on load.
+        // This clears it from the visible URL right after, so it's never
+        // sitting there to be screenshotted, copied, or saved in history.
+        if (window.location.hash.includes('access_token')) {
+            window.history.replaceState(null, '', window.location.pathname);
+        }
+    }, []);
+
+    return <DashboardOverview />;
+}
+
+function DashboardOverview() {
     const getGreeting = () => {
         const h = new Date().getHours();
         if (h < 12) return 'Good morning';
