@@ -14,7 +14,7 @@ export default function RegisterPage() {
         setLoading(true);
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) alert(error.message);
-        else alert('Check your email to confirm your account.');
+        else alert('created account, please login.');
         setLoading(false);
     };
 
