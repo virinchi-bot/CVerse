@@ -6,19 +6,19 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'Googlebot',
         allow: ['/'],
-        disallow: ['/dashboard', '/api/'],
+        disallow: ['/api/'],
         crawlDelay: 0,
       },
       {
         userAgent: 'Bingbot',
         allow: ['/'],
-        disallow: [ '/api/', '/(auth)'],
+        disallow: ['/api/'],
         crawlDelay: 1,
       },
       {
         userAgent: '*',
         allow: ['/'],
-        disallow: [ '/api/', '/(auth)'],
+        disallow: ['/api/'],
         crawlDelay: 1,
       },
     ],
