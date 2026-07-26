@@ -12,17 +12,17 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'Bingbot',
         allow: ['/'],
-        disallow: ['/dashboard', '/api/', '/(auth)'],
+        disallow: [ '/api/', '/(auth)'],
         crawlDelay: 1,
       },
       {
         userAgent: '*',
         allow: ['/'],
-        disallow: ['/dashboard', '/api/', '/(auth)'],
+        disallow: [ '/api/', '/(auth)'],
         crawlDelay: 1,
       },
     ],
-    sitemap: 'https://cverse.dev/sitemap.xml',
-    host: 'https://cverse.dev',
+    sitemap: 'https://cverse-analyze.vercel.app/sitemap.xml',
+    host: 'https://cverse-analyze.vercel.app',
   };
 }
