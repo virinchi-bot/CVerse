@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { PAGES } from '@/lib/seo/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://cverse.dev';
+  const baseUrl = 'https://cverse-analyze.vercel.app';
 
   // Filter only searchable pages (public pages)
   const searchablePages = Object.values(PAGES).filter((page) => page.searchable !== false);
