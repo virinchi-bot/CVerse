@@ -88,7 +88,6 @@ export const PAGES = {
     keywords: ['login', 'sign in'],
     ogImage: `${SITE_CONFIG.url}/auth-img.png`,
     searchable: false,
-    noindex: true,
   },
   register: {
     path: '/register',
@@ -97,7 +96,6 @@ export const PAGES = {
     keywords: ['signup', 'register'],
     ogImage: `${SITE_CONFIG.url}/auth-img.png`,
     searchable: false,
-    noindex: true,
   },
 };
 
