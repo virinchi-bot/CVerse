@@ -5,7 +5,7 @@ import { PAGES, SITE_CONFIG } from "@/lib/seo/constants";
 
 export const metadata: Metadata = genMeta(PAGES.home, {
   verification: {
-    google: 'YOUR_GOOGLE_SEARCH_CONSOLE_ID',
+    google: '4-QywuDRSafKgQEkW6YL_vqO6muEX022jao_PcJ7mt0',
   },
   manifest: '/manifest.json',
   metadataBase: new URL(SITE_CONFIG.url),
@@ -49,6 +49,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/auth-img.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0F1115" />
+        
+        {/* Google Site Verification */}
+        <meta name="google-site-verification" content="4-QywuDRSafKgQEkW6YL_vqO6muEX022jao_PcJ7mt0" />
         
         {/* DNS Prefetch for performance */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
