@@ -42,7 +42,15 @@ async function callModel(
     throw new Error(`HTTP ${res.status}: ${errBody}`);
   }
 
-  const data = await res.json();
+  // Read raw body first so we can give a better error when provider returns non-JSON
+  const raw = await res.text();
+  let data: any;
+  try {
+    data = JSON.parse(raw);
+  } catch (parseErr: any) {
+    // Provider returned non-JSON (plain text or HTML). Include raw body in error to aid debugging.
+    throw new Error(`Invalid JSON response from provider: ${raw}`);
+  }
 
   if (data.error) {
     throw new Error(data.error.message || 'Provider returned error');
@@ -50,7 +58,8 @@ async function callModel(
 
   const content = data.choices?.[0]?.message?.content;
   if (!content) {
-    throw new Error('Empty response from model');
+    // Include the full parsed response to help debugging when provider returns unexpected shape
+    throw new Error(`No content in response: ${JSON.stringify(data)}`);
   }
 
   return content;
