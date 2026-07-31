@@ -24,28 +24,26 @@ export async function POST(req: NextRequest) {
 
     if (!resumeText.trim()) return NextResponse.json({ error: 'PDF has no readable text.' }, { status: 400 });
 
-    const prompt = `
-You are a brutally honest senior technical recruiter and CV advisor.
-Analyze this resume and return ONLY a valid JSON object with no markdown, no backticks.
+   const prompt = `You are a senior technical recruiter. Analyze this resume and return ONLY valid JSON.
 
 Resume:
-${resumeText}
+${resumeText.slice(0, 2000)}
 
-Return exactly this structure:
+Return this exact JSON:
 {
-  "atsScore": number 0-100,
-  "clarityScore": number 0-100,
-  "impactScore": number 0-100,
-  "recruiterScore": number 0-100,
-  "skills": ["skill1"],
-  "strengths": ["strength1"],
-  "weaknesses": ["weakness1"],
-  "suggestions": ["suggestion1"],
-  "buzzwords": ["word1"],
-  "developerLevel": "beginner" or "intermediate" or "advanced" or "ai-native"
+  "atsScore": 0,
+  "clarityScore": 0,
+  "impactScore": 0,
+  "recruiterScore": 0,
+  "skills": [],
+  "strengths": [],
+  "weaknesses": [],
+  "suggestions": [],
+  "buzzwords": [],
+  "developerLevel": "beginner"
 }
-Return ONLY raw JSON. No markdown. No explanation.
-`;
+
+Numbers 0-100. developerLevel: beginner/intermediate/advanced/ai-native. ONLY JSON.`;
 
     const text = await generateText(prompt);
     const clean = text.replace(/```json|```/g, '').trim();
