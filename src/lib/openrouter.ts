@@ -26,14 +26,14 @@ async function callModel(
     headers: {
       Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://cvere-analyze.vercel.app',
       'X-Title': 'CVerse',
     },
     body: JSON.stringify({
       model,
       messages: [{ role: 'user', content: prompt }],
       temperature: options.temperature ?? 0.7,
-      max_tokens: options.maxTokens ?? 2000,
+      max_tokens: options.maxTokens ?? 4096,
     }),
   });
 
